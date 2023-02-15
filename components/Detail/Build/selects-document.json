@@ -1,0 +1,17 @@
+[
+    {
+        "name": "milk",
+        "title": "Milk",
+        "options": ["", "Standard"]
+    },
+    {
+        "name": "foam",
+        "title": "Foam",
+        "options": ["", "Extra foam"]
+    },
+    {
+        "name": "whipping",
+        "title": "Whipping Cream",
+        "options": ["", "No whip"]
+    }
+]
