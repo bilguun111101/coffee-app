@@ -3,8 +3,7 @@ import { Card } from './Build';
 import btns from "./type-button.json";
 import DropShadow from "react-native-drop-shadow";
 import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
-import { Loading } from '../Loading/Loading';
-import { MyBag } from '..';
+import { Otp } from '../OTP/Otp';
 
 export const Order = () => {
   return (
@@ -29,9 +28,8 @@ export const Order = () => {
         </ScrollView>
       </View>
     </View>
-    // <Opt />
-    // <Loading visible={false} />
-    // <MyBag />
+    // <LogInWithPhone />
+    // <Otp />
   )
 }
 

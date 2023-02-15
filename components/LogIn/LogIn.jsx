@@ -31,7 +31,7 @@ export const LogIn = () => {
                 onChangeText={setPassword}
                 value={password}
                 defaultValue={password}
-                keyboardType="visible-password"
+                keyboardType="password"
                 placeholder='password ...'
             />
         </View>
