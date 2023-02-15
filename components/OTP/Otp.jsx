@@ -1,12 +1,20 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, SafeAreaView, Text, TextInput } from 'react-native';
 import { useAuth } from '../context';
 
 export const Otp = () => {
-    const { confirmCode, setConfirmationCode, confirmationCode } = useAuth()
+    const { confirmCode, setConfirmationCode, confirmationCode, phoneNumber } = useAuth()
+    const navigation = useNavigation();
     const check_opt = (number) => {
         if (number.length >= 5) {
-            confirmCode();
+            const check = confirmCode();
+            if(!check) {
+                alert("your otp code is wrong!!!")
+                return;
+            }
+            setConfirmationCode("");
+            navigation.navigate("Bottom_tab_container");
             return;
         }
         setConfirmationCode(number);
@@ -17,7 +25,7 @@ export const Otp = () => {
         <View style={styles.title_section}>
             <Text style={styles.title}>Enter your mobile number</Text>
         </View>
-        <Text style={styles.text}>{`We will send confirmation code ${213}`}</Text>
+        <Text style={styles.text}>{`We will send confirmation code +976${phoneNumber}`}</Text>
         <View style={styles.number_section}>
             <TextInput 
                 style={styles.input}

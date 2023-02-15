@@ -56,11 +56,11 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        handleChangePhoneNumber,
-        handleChangeConfirmationCode,
         signInWithPhoneNumber,
         confirmCode,
         logOut,
+        setConfirmationCode,
+        setPhoneNumber,
       }}
     >
       {children}

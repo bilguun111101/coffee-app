@@ -7,29 +7,29 @@ import { Otp } from '../OTP/Otp';
 
 export const Order = () => {
   return (
-    <View style={styles.container_content}>
-      <View style={styles.container}>
-        <DropShadow style={styles.header}>
-          <View style={styles.header_content}>
-            <Text style={{ color: '#000', fontSize: 20, fontWeight: '600' }}>My Orders</Text>
-          </View>
-          <View style={styles.header_btns}>
-            { btns.map((el, idx) => {
-              return(
-                <View style={styles.btn_content} key={idx}>
-                  <Pressable><Text style={{ fontSize: 17 }}>{ el }</Text></Pressable>
-                </View>
-              )
-            }) }
-          </View>
-        </DropShadow>
-        <ScrollView style={styles.content}>
-          <Card />
-        </ScrollView>
-      </View>
-    </View>
+    // <View style={styles.container_content}>
+    //   <View style={styles.container}>
+    //     <DropShadow style={styles.header}>
+    //       <View style={styles.header_content}>
+    //         <Text style={{ color: '#000', fontSize: 20, fontWeight: '600' }}>My Orders</Text>
+    //       </View>
+    //       <View style={styles.header_btns}>
+    //         { btns.map((el, idx) => {
+    //           return(
+    //             <View style={styles.btn_content} key={idx}>
+    //               <Pressable><Text style={{ fontSize: 17 }}>{ el }</Text></Pressable>
+    //             </View>
+    //           )
+    //         }) }
+    //       </View>
+    //     </DropShadow>
+    //     <ScrollView style={styles.content}>
+    //       <Card />
+    //     </ScrollView>
+    //   </View>
+    // </View>
     // <LogInWithPhone />
-    // <Otp />
+    <Otp />
   )
 }
 

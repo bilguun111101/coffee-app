@@ -712,11 +712,17 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.70.5)
   - Firebase (10.5.0):
     - Firebase/Core (= 10.5.0)
+  - Firebase/Auth (10.5.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 10.5.0)
   - Firebase/Core (10.5.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 10.5.0)
   - Firebase/CoreOnly (10.5.0):
     - FirebaseCore (= 10.5.0)
+  - Firebase/Firestore (10.5.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 10.5.0)
   - FirebaseAnalytics (10.5.0):
     - FirebaseAnalytics/AdIdSupport (= 10.5.0)
     - FirebaseCore (~> 10.0)
@@ -1170,6 +1176,15 @@ PODS:
   - RNFBApp (17.2.0):
     - Firebase/CoreOnly (= 10.5.0)
     - React-Core
+  - RNFBAuth (17.2.0):
+    - Firebase/Auth (= 10.5.0)
+    - React-Core
+    - RNFBApp
+  - RNFBFirestore (17.2.0):
+    - Firebase/Firestore (= 10.5.0)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (2.8.0):
     - React-Core
   - Yoga (1.14.0)
@@ -1233,6 +1248,8 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
+  - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1361,6 +1378,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAuth:
+    :path: "../node_modules/@react-native-firebase/auth"
+  RNFBFirestore:
+    :path: "../node_modules/@react-native-firebase/firestore"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   Yoga:
@@ -1437,6 +1458,8 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7401c4a40f8728fd89df4a56104541b760876117
   ReactCommon: c9246996e73bf75a2c6c3ff15f1e16707cdc2da9
   RNFBApp: 72689120614e575a3be05328c5b3235666511054
+  RNFBAuth: 366ce9e24188a8273a5dde3e0e89ed59879e8b27
+  RNFBFirestore: 3f120433f893a3cfe8854067339ab7cccbb07014
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
 

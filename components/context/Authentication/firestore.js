@@ -31,6 +31,7 @@ const UserDataContext = createContext();
 // }
 
 export const UserDataProvider = ({ children }) => {
+    const [products, setProducts] = useState();
 
     const getUserDocument = async(doc, collection) => {
         try {
@@ -68,6 +69,8 @@ export const UserDataProvider = ({ children }) => {
                 getUserDocument,
                 setUserDocument,
                 updateDocumentMyBag,
+                products, 
+                setProducts,
             }}
         >
             { children }
