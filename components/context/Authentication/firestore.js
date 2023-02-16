@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import firestore from '@react-native-firebase/firestore';
+import { useGet_data_from_firestore } from "../../hook/get_data_from_firestore";
 
 const UserDataContext = createContext();
 
@@ -31,21 +32,7 @@ const UserDataContext = createContext();
 // }
 
 export const UserDataProvider = ({ children }) => {
-    const [products, setProducts] = useState();
-
-    // const getUserDocument = async(doc, collection) => {
-    //     try {
-    //         let userDocument;
-    //         if (doc) {
-    //             userDocument = await firestore().collection(collection).doc(doc).get();
-    //             return userDocument;
-    //         }
-    //         userDocument = await firestore().collection(collection).get();
-    //         return userDocument;
-    //     } catch (error) {
-    //         console.log("Error of getUserDocument: ", error);
-    //     }
-    // }
+    const products = false || useGet_data_from_firestore("products");
 
     const setUserDocument = async({ doc, name, myBag, orders, phone, email }) => {
         firestore().collection('users').doc(doc).set({
@@ -63,30 +50,13 @@ export const UserDataProvider = ({ children }) => {
         })
     }
 
-    useEffect(() => {
-        const getUserDocument = async(doc, collection) => {
-            try {
-                let userDocument;
-                if (doc) {
-                    userDocument = await firestore().collection(collection).doc(doc).get();
-                    return userDocument;
-                }
-                userDocument = await firestore().collection(collection).get();
-                return userDocument;
-            } catch (error) {
-                console.log("Error of getUserDocument: ", error);
-            }
-        }
-        setProducts(getUserDocument(false, 'products'));
-    }, [])
-
     return (
         <UserDataContext.Provider
             value={{
                 setUserDocument,
                 updateDocumentMyBag,
                 products, 
-                setProducts,
+                // setProducts,
             }}
         >
             { children }

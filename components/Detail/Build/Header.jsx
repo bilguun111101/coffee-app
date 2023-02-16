@@ -3,13 +3,18 @@ import { BlurView } from 'expo-blur';
 import { View, Image, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
+import { useDetailData } from '../../context';
 
 export const Header = () => {
   const navigation = useNavigation();
+  const { detailData, setDetailData } = useDetailData();
   return (
     <View style={styles.header}>
         <View style={styles.header_btns}>
-          <Pressable style={styles.header_btn_container} onPress={ () => navigation.navigate("Home") }>
+          <Pressable style={styles.header_btn_container} onPress={ () => {
+            setDetailData({  });
+            navigation.navigate("Home")
+          }}>
             <BlurView
                 style={styles.header_btn}
                 tint="light"
@@ -28,7 +33,7 @@ export const Header = () => {
             </BlurView>
           </Pressable>
         </View>
-        <Image source={require("../../../assets/testImage.png")} style={styles.header_image} />
+        <Image source={{ uri: detailData.image }} style={styles.header_image} />
     </View>
   )
 }

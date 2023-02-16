@@ -2,22 +2,40 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, View, SafeAreaView, Text, TextInput } from 'react-native';
 import { useAuth } from '../context';
+import firestore from "@react-native-firebase/firestore";
 
 export const Otp = () => {
     const { confirmCode, setConfirmationCode, confirmationCode, phoneNumber } = useAuth()
     const navigation = useNavigation();
     const check_opt = (number) => {
-        if (number.length >= 5) {
-            const check = confirmCode();
-            if(!check) {
-                alert("your otp code is wrong!!!")
-                return;
-            }
-            setConfirmationCode("");
-            navigation.navigate("Bottom_tab_container");
+        if(number.length <= 6){
+            setConfirmationCode(number);
             return;
         }
-        setConfirmationCode(number);
+        (async() => {
+            try {
+                const isConfirmed = await confirmCode();
+                console.log(isConfirmed);
+                if (!isConfirmed?.additionalUserInfo?.isNewuser) {
+                    console.log(
+                    "is new",
+                    isConfirmed?.additionalUserInfo?.phoneNumber
+                );
+                    await firestore()
+                    .collection("users")
+                    .doc(isConfirmed?.user?.uid)
+                    .set({
+                        phoneNumber: isConfirmed?.user?.phoneNumber,
+                        myBag: [],
+                        orders: [],
+                    });
+                }
+                navigator.navigate("Bottom_tab_container");
+                return;
+            } catch (error) {
+                console.log(error);
+            }
+        })()
     }
   return (
     <SafeAreaView style={styles.container}>

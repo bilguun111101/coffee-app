@@ -4,9 +4,12 @@ import { Amount, Header, Select, Shot } from './Build';
 import selects from "./Build/selects-document.json";
 import amount from "./coffee-amount.json";
 import DropShadow from "react-native-drop-shadow";
+import { useDetail } from "../context";
+import { useDetailData } from "../context";
 
 export const Detail = () => {
   const [sizeOptions, setSizeOptions] = useState( new Array(amount.length).fill(false) );
+  const { detailData, setDetailData } = useDetailData();
   const { setOrder, order } = useDetail();
   const addToBag = () => {
     const new_date = new Date();
@@ -53,7 +56,6 @@ export const Detail = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      // paddingBottom: 30
       backgroundColor: '#FFF',
     },
     content: {

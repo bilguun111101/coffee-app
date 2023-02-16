@@ -28,11 +28,13 @@ export const AuthProvider = ({ children }) => {
 
 
   const signInWithPhoneNumber = async () => {
+    console.log("+ ", phoneNumber);
     try {
       const confirmation = await auth().signInWithPhoneNumber(
         `+976${phoneNumber}`
       );
       setConfirm(confirmation);
+      return true;
     } catch (error) {
       console.log(error);
     }
@@ -62,6 +64,7 @@ export const AuthProvider = ({ children }) => {
         logOut,
         setConfirmationCode,
         setPhoneNumber,
+        phoneNumber,
       }}
     >
       {children}

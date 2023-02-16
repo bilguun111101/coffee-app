@@ -21,8 +21,8 @@ export const Profile = () => {
         <Image source={require("../../assets/logo.png")} />
       </View>
       <View style={styles.content}>
-        <View style={styles.image_container}>
-        </View>
+        <View style={styles.image_container}></View>
+        <Text>{ user?.phoneNumber }</Text>
         <TouchableOpacity style={styles.button_container} onPress={() => logout_or_not()}>
           <Feather name="log-out" size={28} color="black" />
           <Text style={{ marginLeft: 5, fontSize: 20 }}>{ user ? "Log out" : "Log in" }</Text>

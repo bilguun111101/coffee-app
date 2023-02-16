@@ -4,7 +4,6 @@ import { MyBag, DetailSection, Start } from "../../coffee-app/components";
 import { useUserActive, useUserData } from "../components/context";
 import { Otp } from "../components/OTP/Otp";
 import { LogInWithPhone } from "../components/LogInWithPhone/LogInWithPhone";
-import { useEffect } from "react";
 
 const Stack = createStackNavigator();
 

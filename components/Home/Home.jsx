@@ -1,6 +1,6 @@
 import styles from './Home-style';
-import DATA from "./products-data.json";
 import TYPE_BTNS from "./type-btns.json";
+import { useUserData } from '../context';
 import { Favourite, ImageSection } from './Build';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, SafeAreaView, Image, ScrollView, Pressable, TouchableOpacity } from "react-native";
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export const Home = () => {
   const navigation = useNavigation();
+  const { products } = useUserData();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header_section}>
@@ -37,11 +38,11 @@ export const Home = () => {
           </View>
           <View style={styles.favourite_section}>
             <Text style={{ fontSize: 16 }}>Your favourite</Text>
-            <Favourite data={DATA} />
+            <Favourite data={products} />
           </View>
           <View style={styles.favourite_section}>
             <Text style={{ fontSize: 16 }}>Seasonal drinks</Text>
-            <Favourite data={DATA} />
+            <Favourite data={products} />
           </View>
           <View style={styles.choose_type_section}>
             <View style={styles.type_btns}>
@@ -56,7 +57,7 @@ export const Home = () => {
               }) }
             </View>
             <View style={styles.type_products}>
-              { DATA.map((el, idx) => <ImageSection data={el} key={idx} />) }
+              { products?.map((el, idx) => <ImageSection data={el} key={idx} />) }
             </View>
           </View>
         </View>

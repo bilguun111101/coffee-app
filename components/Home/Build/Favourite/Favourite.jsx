@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, Text, View, StyleSheet, Image, Pressable } from 'react-native';
+import { useDetailData } from '../../../context';
 
 export const Favourite = ({ data }) => {
   return (
@@ -9,14 +10,19 @@ export const Favourite = ({ data }) => {
 }
 
 export const ImageSection = ({ data }) => {
-    const { image, cost, name, type } = data;
     const navigation = useNavigation();
+    const { image, price, name } = data;
+    const { setDetailData } = useDetailData();
+    const click_product = () => {
+        setDetailData(data);
+        navigation.navigate("Detail")
+    }
     return (
-        <Pressable style={styles.image_section} onPress={ () => navigation.navigate("Detail") }>
-            <Image source={require("../../../../assets/testImage.png")} style={styles.image} />
+        <Pressable style={styles.image_section} onPress={ () => click_product() }>
+            <Image source={{ uri: image }} style={styles.image} />
             <View style={{ marginTop: 10, flexDirection: 'column' }}>
-                <Text style={styles.name}>Hot Chocolate</Text>
-                <Text style={styles.price}>$3.12 / spruce</Text>
+                <Text style={styles.name}>{ name }</Text>
+                <Text style={styles.price}>{`$${price} / spruce`}</Text>
             </View>
         </Pressable>
     )

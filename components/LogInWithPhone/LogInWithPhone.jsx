@@ -7,34 +7,32 @@ export const LogInWithPhone = () => {
     const { phoneNumber, setPhoneNumber, signInWithPhoneNumber } = useAuth();
     const navigation = useNavigation();
     const phone_number_input = (number) => {
-        if (number.length > 8) {
+        if (number.length < 9) {
+            setPhoneNumber(number);
+        } else {
             signInWithPhoneNumber();
             navigation.navigate("Otp");
             return;
         };
-        setPhoneNumber(number);
     }
-    useEffect(() => {
-        console.log(phone)
-    }, [phone])
-  return (
-    <SafeAreaView style={styles.container}>
-        <Image source={require("../../assets/phone.png")} style={styles.icon} />
-        <View style={styles.title_section}>
-            <Text style={styles.title}>Enter your mobile number</Text>
-        </View>
-        <Text style={styles.text}>We will send confirmation code</Text>
-        <View style={styles.number_section}>
-            <Text style={styles.number_of_country}>+976</Text>
-            <TextInput 
-                style={styles.input}
-                onChangeText={phone_number_input}
-                value={phoneNumber}
-                keyboardType="phone-pad"
-            />
-        </View>
-    </SafeAreaView>
-  )
+    return (
+        <SafeAreaView style={styles.container}>
+            <Image source={require("../../assets/phone.png")} style={styles.icon} />
+            <View style={styles.title_section}>
+                <Text style={styles.title}>Enter your mobile number</Text>
+            </View>
+            <Text style={styles.text}>We will send confirmation code</Text>
+            <View style={styles.number_section}>
+                <Text style={styles.number_of_country}>+976</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={phone_number_input}
+                    value={phoneNumber}
+                    keyboardType="phone-pad"
+                />
+            </View>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
