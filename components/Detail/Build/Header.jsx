@@ -23,7 +23,10 @@ export const Header = () => {
             <AntDesign name="left" size={20} color="white" />
             </BlurView>
           </Pressable>
-          <Pressable style={styles.header_btn_container} onPress={ () => navigation.navigate("MyBag") }>
+          <Pressable style={styles.header_btn_container} onPress={ () => {
+            setDetailData({  });
+            navigation.navigate("MyBag")
+          } }>
             <BlurView
                 style={styles.header_btn}
                 tint="light"
