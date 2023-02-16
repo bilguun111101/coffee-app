@@ -1,8 +1,20 @@
 import React from 'react'
+import { useAuth } from '../context';
 import { Feather } from '@expo/vector-icons';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export const Profile = () => {
+  const { user, logOut } = useAuth();
+  const navigation = useNavigation();
+  const logout_or_not = () => {
+    if(!user) {
+      navigation.navigate("LogIn")
+      return;
+    }
+    logOut();
+    navigation.navigate("Home")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -11,9 +23,9 @@ export const Profile = () => {
       <View style={styles.content}>
         <View style={styles.image_container}>
         </View>
-        <TouchableOpacity style={styles.button_container}>
+        <TouchableOpacity style={styles.button_container} onPress={() => logout_or_not()}>
           <Feather name="log-out" size={28} color="black" />
-          <Text style={{ marginLeft: 5, fontSize: 20 }}>Log out</Text>
+          <Text style={{ marginLeft: 5, fontSize: 20 }}>{ user ? "Log out" : "Log in" }</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -1,4 +1,4 @@
-package com.anonymous.coffeeapp;
+package com.coffeeapp;
 
 import android.os.Build;
 import android.os.Bundle;

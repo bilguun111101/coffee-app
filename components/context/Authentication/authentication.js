@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
+// import { auth, firestore } from "./app";
 
 
 const AuthContext = createContext();
