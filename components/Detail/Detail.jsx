@@ -19,7 +19,7 @@ export const Detail = () => {
   const addToBag = () => {
     const new_date = new Date();
     const date = `${new_date.getDate()}-${new_date.getMonth() + 1}-${new_date.getFullYear()}`
-    const data = { ...order, date, addiction, uuid: userUid, name: detailData.name, total: +total * order.quantity };
+    const data = { ...order, date, addiction, uuid: userUid, name: detailData.name, total: +total * order.quantity, image: detailData.image, process: "Processing" };
     setDocumentMyBag("myBag", data);
     navigation.navigate("Bottom_tab_container");
   }

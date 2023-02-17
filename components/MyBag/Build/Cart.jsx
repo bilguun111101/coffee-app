@@ -2,20 +2,35 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, Pressable } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import firestore from "@react-native-firebase/firestore";
+import { useAuth } from '../../context';
 
-export const Cart = () => {
+export const Cart = (props) => {
+    const { addiction, total, name, size, image, id } = props.data;
+    const { userUid } = useAuth();
     const navigation = useNavigation();
+    const deleteBagElement = async() => {
+        await firestore().collection('admin').doc(userUid).collection("myBag").doc(id).delete();
+    }
   return (
     <View style={styles.container}>
-        <TouchableOpacity style={styles.close_btn}>
+        <TouchableOpacity style={styles.close_btn} onPress={() => deleteBagElement()}>
             <AntDesign name="close" size={24} color="black" />
         </TouchableOpacity>
         <View style={styles.image_section}>
-            <Image source={require("../../../assets/testImage.png")} style={styles.image} />
+            <Image source={{ uri: image }} style={styles.image} />
         </View>
         <View style={styles.document}>
-            <Text style={styles.name}>Hot Chocolate</Text>
-            <Text>{`$3.12 / spruce`}</Text>
+            <Text style={styles.name}>{ name }</Text>
+            <Text>{`$${total} / ${size}`}</Text>
+            <View style={{ marginTop: 20, }}>
+                { addiction?.map((el, idx) => {
+                    if (el === "") return;
+                    return (
+                        <Text style={{ marginBottom: 5 }} key={idx}>{ `+ ${el}` }</Text>
+                    )
+                }) }
+            </View>
         </View>
     </View>
   )
@@ -27,6 +42,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 16,
         paddingBottom: 16,
+        borderBottomWidth: 0.8,
+        borderBottomColor: 'silver',
+        marginBottom: 20,
     },
     image_section: {
         width: '30%',
@@ -42,7 +60,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         right: 0,
-        paddingRight: 16
+        paddingRight: 16,
+        zIndex: 10,
     },
     image: {
         width: '100%',

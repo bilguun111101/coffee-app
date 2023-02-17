@@ -1,15 +1,15 @@
 import styles from './Home-style';
 import TYPE_BTNS from "./type-btns.json";
-import { useUserData } from '../context';
+import { useAuth, useUserData } from '../context';
 import { Favourite, ImageSection } from './Build';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, SafeAreaView, Image, ScrollView, Pressable, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const Home = () => {
   const navigation = useNavigation();
-  const { products } = useUserData();
+  const { products, myBag } = useUserData();
   const [type, setType] = useState("");
   return (
     <SafeAreaView style={styles.container}>
@@ -17,9 +17,16 @@ export const Home = () => {
         <View style={{ width: '100%', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <Image source={require("../../assets/logo.png")} style={{ width: 170, height: 25 }} />
           <TouchableOpacity style={styles.bag_icon} onPress={() => navigation.navigate("MyBag")}>
-            <View style={styles.amount_bag}>
-              <Text style={{ color: '#FFF' }}>4</Text>
-            </View>
+            {
+              myBag ?
+                  <>
+                    <View style={styles.amount_bag}>
+                      <Text style={{ color: '#FFF' }}>{ myBag.length }</Text>
+                    </View>
+                  </>
+                :
+                  <></>
+            }
             <SimpleLineIcons name="bag" size={25} color="black" />
           </TouchableOpacity>
         </View>
@@ -59,7 +66,6 @@ export const Home = () => {
               }) }
             </View>
             <View style={styles.type_products}>
-              {/* { products?.map((el, idx) => <ImageSection data={el} key={idx} />) } */}
               { products?.filter((el, idx) => type === "" ? el : type === el.type && el).map((el, idx) => <ImageSection data={el} key={idx} />) }
             </View>
           </View>

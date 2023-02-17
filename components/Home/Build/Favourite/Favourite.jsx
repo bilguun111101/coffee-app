@@ -5,7 +5,7 @@ import { useDetailData } from '../../../context';
 
 export const Favourite = ({ data }) => {
   return (
-    <FlatList horizontal data={data} renderItem={({ item }) => <ImageSection data={item} />} keyExtractor={item => item.id} />
+    <FlatList horizontal data={data} renderItem={({ item }) => <ImageSection data={item} />} keyExtractor={item => item.image} />
   )
 }
 

@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
-import { useAuth } from '../context';
-import { Cart } from './Build/Cart';
+import { useAuth, useUserData } from '../context';
+import { Cart } from './Build';
 import { Empty } from "../Empty";
 
 export const MyBag = () => {
   const { user } = useAuth();
+  const { myBag } = useUserData();
+  // const total = myBag?.reduce((accumilator, currenValue) => accumilator + currenValue.price);
   return (
     <SafeAreaView style={styles.container}>
       {
         user ? (
-          <>
-            <View style={styles.header}>
-                <Text style={styles.title}>{`Order items (2)`}</Text>
-            </View>
-            <ScrollView style={styles.order}>
-              <Cart />
-            </ScrollView>
-            <View style={styles.bottom_document}>
-              <View style={styles.bottom_document_content}>
-                <View style={styles.row}></View>
+          myBag ?
+            (<>
+              <View style={styles.header}>
+                  <Text style={styles.title}>{`Order items ${myBag.length}`}</Text>
               </View>
-            </View>
-          </>
+              <ScrollView style={styles.order}>
+                { myBag?.map((el, idx) => <Cart data={el} key={idx} />) }
+              </ScrollView>
+              <View style={styles.bottom_document}>
+                <View style={styles.subtotal}>
+                  <Text style={{ color: 'gray' }}>Subtotal</Text>
+                  {/* <Text style={{ color: 'gray' }}>{ `${total + 10}$` }</Text> */}
+                </View>
+                <View style={styles.subtotal}>
+                  <Text style={{ color: 'gray' }}>Tax & Fees</Text>
+                  <Text style={{ color: 'gray' }}>{ `${10}$` }</Text>
+                </View>
+                <View style={styles.subtotal}>
+                  <Text style={{ fontSize: 18, fontWeight: '500' }}>Total</Text>
+                  {/* <Text style={{ fontSize: 16, fontWeight: '500' }}>{total}</Text> */}
+                </View>
+              </View>
+            </>)
+            :
+            <Empty empty_or_not={false} />
         ) : (
-          <Empty empty_or_not={user ? true : false} />
+          <Empty empty_or_not={true} />
         )
       }
     </SafeAreaView>
@@ -52,14 +66,13 @@ const styles = StyleSheet.create({
       padding: 16,
       flex: 1,
     },
-    bottom_document_content: {
-      flex: 1,
-      paddingTop: 16,
-    },
-    row: {
+    subtotal: {
       width: '100%',
       flexDirection: 'row',
+      marginBottom: 20,
       alignItems: 'center',
       justifyContent: 'space-between',
+      borderBottomWidth: 0.8,
+      borderBottomColor: 'silver'
     }
 })
