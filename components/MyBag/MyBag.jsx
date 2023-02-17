@@ -1,21 +1,32 @@
 import React from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
+import { useAuth } from '../context';
 import { Cart } from './Build/Cart';
+import { Empty } from "../Empty";
 
 export const MyBag = () => {
+  const { user } = useAuth();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{`Order items (2)`}</Text>
-      </View>
-      <ScrollView style={styles.order}>
-        <Cart />
-      </ScrollView>
-      <View style={styles.bottom_document}>
-        <View style={styles.bottom_document_content}>
-          <View style={styles.row}></View>
-        </View>
-      </View>
+      {
+        user ? (
+          <>
+            <View style={styles.header}>
+                <Text style={styles.title}>{`Order items (2)`}</Text>
+            </View>
+            <ScrollView style={styles.order}>
+              <Cart />
+            </ScrollView>
+            <View style={styles.bottom_document}>
+              <View style={styles.bottom_document_content}>
+                <View style={styles.row}></View>
+              </View>
+            </View>
+          </>
+        ) : (
+          <Empty empty_or_not={user ? true : false} />
+        )
+      }
     </SafeAreaView>
   )
 }

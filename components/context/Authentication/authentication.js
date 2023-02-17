@@ -1,13 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
-// import { auth, firestore } from "./app";
-
 
 const AuthContext = createContext();
 
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [userUid, setUserUid] = useState();
   const [loading, setLoading] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmationCode, setConfirmationCode] = useState("");
@@ -15,7 +13,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged((user) => {
-      if (user) setUser(user);
+      if (user) {
+        setUser(user)
+        setUserUid(user.uid);
+      };
       if (loading) setLoading(false);
     });
     return subscriber; // unsubscribe on unmount
@@ -59,6 +60,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        userUid,
         signInWithPhoneNumber,
         confirmCode,
         logOut,

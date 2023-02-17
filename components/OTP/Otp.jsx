@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, View, SafeAreaView, Text, TextInput } from 'react-native';
+import { Image, StyleSheet, View, SafeAreaView, Text, TextInput, Pressable } from 'react-native';
 import { useAuth } from '../context';
 import firestore from "@react-native-firebase/firestore";
 
@@ -8,19 +7,16 @@ export const Otp = () => {
     const { confirmCode, setConfirmationCode, confirmationCode, phoneNumber } = useAuth()
     const navigation = useNavigation();
     const check_opt = (number) => {
-        if(number.length <= 6){
-            setConfirmationCode(number);
-            return;
-        }
-        (async() => {
-            try {
-                const isConfirmed = await confirmCode();
-                console.log(isConfirmed);
-                if (!isConfirmed?.additionalUserInfo?.isNewuser) {
-                    console.log(
+        setConfirmationCode(number);
+    }
+    const sendCode = async() => {
+        try {
+            const isConfirmed = await confirmCode();
+            if (!isConfirmed?.additionalUserInfo?.isNewUser) {
+                console.log(
                     "is new",
                     isConfirmed?.additionalUserInfo?.phoneNumber
-                );
+                    );
                     await firestore()
                     .collection("users")
                     .doc(isConfirmed?.user?.uid)
@@ -30,12 +26,11 @@ export const Otp = () => {
                         orders: [],
                     });
                 }
-                navigator.navigate("Bottom_tab_container");
+                navigation.navigate("Bottom_tab_container");
                 return;
             } catch (error) {
                 console.log(error);
             }
-        })()
     }
   return (
     <SafeAreaView style={styles.container}>
@@ -47,11 +42,14 @@ export const Otp = () => {
         <View style={styles.number_section}>
             <TextInput 
                 style={styles.input}
-                onChangeText={check_opt}
+                onChangeText={text => text.length < 7 && check_opt(text)}
                 value={confirmationCode}
                 keyboardType="phone-pad"
             />
         </View>
+        <Pressable onPress={sendCode} style={styles.sendCode}>
+            <Text style={{ color: "#FFF" }}>Send code</Text>
+        </Pressable>
     </SafeAreaView>
   )
 }
@@ -102,4 +100,11 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         paddingHorizontal: 14,
     },
+    sendCode: {
+        marginTop: 60,
+        paddingHorizontal: 20,
+        paddingVertical: 14,
+        backgroundColor: '#D3A762',
+        borderRadius: 5
+    }
 })

@@ -1,21 +1,29 @@
-import { useState } from "react";
 import { View, StyleSheet, Text, ScrollView, Pressable } from "react-native";
+import { useAuth, useDetailData, useUserData } from "../context";
+import { useNavigation } from "@react-navigation/native";
 import { Amount, Header, Select, Shot } from './Build';
 import selects from "./Build/selects-document.json";
-import amount from "./coffee-amount.json";
 import DropShadow from "react-native-drop-shadow";
+import amount from "./coffee-amount.json";
 import { useDetail } from "../context";
-import { useDetailData } from "../context";
+import { useState } from "react";
 
 export const Detail = () => {
+  const { userUid } = useAuth();
+  const navigation = useNavigation();
+  const { order, total } = useDetail();
+  const { setDocumentMyBag } = useUserData();
+  const { addiction, detailData } = useDetailData();
   const [sizeOptions, setSizeOptions] = useState( new Array(amount.length).fill(false) );
-  const { detailData, setDetailData } = useDetailData();
-  const { setOrder, order } = useDetail();
+
   const addToBag = () => {
     const new_date = new Date();
     const date = `${new_date.getDate()}-${new_date.getMonth() + 1}-${new_date.getFullYear()}`
-    setOrder({ ...order, date });
+    const data = { ...order, date, addiction, uuid: userUid, name: detailData.name, total: +total * order.quantity };
+    setDocumentMyBag("myBag", data);
+    navigation.navigate("Bottom_tab_container");
   }
+
   return (
     <View style={styles.container}>
       <Header />
@@ -29,7 +37,7 @@ export const Detail = () => {
               return (
                 <Amount 
                   key={idx}
-                  text={el} 
+                  data={el} 
                   booleans={sizeOptions} 
                   setBooleans={setSizeOptions} 
                   index={idx} 

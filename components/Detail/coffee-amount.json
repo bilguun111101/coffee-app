@@ -1,1 +1,27 @@
-["Small", "Sprunce", "Ceder", "Redwood", "Giant"]
+[
+    {
+        "text": "Small",
+        "img": "https://firebasestorage.googleapis.com/v0/b/coffee-app-ded58.appspot.com/o/8oz.png?alt=media&token=b62b25e6-d8cb-485f-b1db-874c19151616",
+        "cost": 0
+    },
+    {
+        "text": "Sprunce",
+        "img": "https://firebasestorage.googleapis.com/v0/b/coffee-app-ded58.appspot.com/o/12oz.png?alt=media&token=5824ada8-7f17-4181-885e-d2df7c473e36",
+        "cost": 2
+    },
+    {
+        "text": "Ceder",
+        "img": "https://firebasestorage.googleapis.com/v0/b/coffee-app-ded58.appspot.com/o/16oz.png?alt=media&token=aa83a548-71a5-440e-8e6c-38dec96c9640",
+        "cost": 4
+    },
+    {
+        "text": "Redwood",
+        "img": "https://firebasestorage.googleapis.com/v0/b/coffee-app-ded58.appspot.com/o/20oz.png?alt=media&token=0a7d63c8-6af9-4e96-ae21-2fb73dc73c29",
+        "cost": 6
+    },
+    {
+        "text": "Giant",
+        "img": "https://firebasestorage.googleapis.com/v0/b/coffee-app-ded58.appspot.com/o/24oz.png?alt=media&token=4a9ee6a5-9702-4b60-ba49-20c5cddbefef",
+        "cost": 8
+    }
+]

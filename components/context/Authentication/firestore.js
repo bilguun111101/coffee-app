@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import firestore from '@react-native-firebase/firestore';
 import { useGet_data_from_firestore } from "../../hook/get_data_from_firestore";
+import { useAuth } from "./authentication";
 
 const UserDataContext = createContext();
 
@@ -32,31 +33,29 @@ const UserDataContext = createContext();
 // }
 
 export const UserDataProvider = ({ children }) => {
-    const products = false || useGet_data_from_firestore("products");
+    const products = useGet_data_from_firestore("products") || false;
+    const [current_user_data, setCurrent_user_data] = useState(false);
+    const { userUid } = useAuth();
 
-    const setUserDocument = async({ doc, name, myBag, orders, phone, email }) => {
-        firestore().collection('users').doc(doc).set({
-            name,
-            myBag,
-            orders,
-            phone, 
-            email,  
-        })
+    const setDocumentMyBag = async(path, myBag) => {
+        await firestore().collection('admin').doc(userUid).collection(path).add(myBag);
+    }
+    
+    const getUserData = async(path, doc) => {
+        return await firestore().collection(path).doc(doc).get();
     }
 
-    const updateDocumentMyBag = async({ doc, myBag }) => {
-        firestore().collection('users').doc(doc).update({
-            myBag,
-        })
-    }
+    useEffect(() => {
+        if(userUid) setCurrent_user_data(getUserData("myBag", userUid))
+    }, [userUid])
 
     return (
         <UserDataContext.Provider
             value={{
-                setUserDocument,
-                updateDocumentMyBag,
                 products, 
-                // setProducts,
+                getUserData,
+                current_user_data,
+                setDocumentMyBag
             }}
         >
             { children }

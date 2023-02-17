@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
 import SelectDropdown from 'react-native-select-dropdown';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
-import { useDetail } from '../../context';
+import { useDetail, useDetailData } from '../../context';
 
 
 export const Select = props => {
   const { title, options, name } = props;
-  const { order, setOrder } = useDetail();
+  const { setAddiction, addiction } = useDetailData();
   const [active, setActive] = useState(false);
   const [option, setOption] = useState(options[0]);
+  const clickSelect = (item) => {
+    setActive(!active)
+    if (!addiction.includes(item)) setAddiction([ ...addiction, item ]);
+    return;
+  }
   
   useEffect(() => {
-    setOrder({ ...order, [`${name}`]: option });
-  }, [], [option])
+    // setAddiction(old => old.filter((el, idx) => (el !== "" && el !== option)).push(option));
+  }, [option])
   return (
     <Pressable style={styles.container} onPress={() => setActive(!active)}>
         <Text style={{ ...styles.title, color: active ? "#969495" : '#D3A762' }}>{ title }</Text>
@@ -21,6 +26,7 @@ export const Select = props => {
             data={options}
             onSelect={(selectedItem, index) => {
               setOption(selectedItem);
+              clickSelect(selectedItem);
             }}
             defaultButtonText={option}
             buttonTextAfterSelection={(selectedItem, index) => {

@@ -5,18 +5,18 @@ import { DetailDataProvider } from './components/context/Detail/Detail_data';
 
 export default function App() {
   return (
-    <DetailDataProvider>
-      <UserDataProvider>
-        <AuthProvider>
-          <InsertProvider>
-            <UserActiveProvider>
-              <NavigationContainer>
-                <MyStack />
-              </NavigationContainer>
-            </UserActiveProvider>
-          </InsertProvider>
-        </AuthProvider>
-      </UserDataProvider>
-    </DetailDataProvider>
+    <AuthProvider>
+      <DetailDataProvider>
+        <UserDataProvider>
+            <InsertProvider>
+              <UserActiveProvider>
+                <NavigationContainer>
+                  <MyStack />
+                </NavigationContainer>
+              </UserActiveProvider>
+            </InsertProvider>
+        </UserDataProvider>
+      </DetailDataProvider>
+    </AuthProvider>
   );
 }

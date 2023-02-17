@@ -5,10 +5,12 @@ import { Favourite, ImageSection } from './Build';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, SafeAreaView, Image, ScrollView, Pressable, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
 export const Home = () => {
   const navigation = useNavigation();
   const { products } = useUserData();
+  const [type, setType] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header_section}>
@@ -49,7 +51,7 @@ export const Home = () => {
               { TYPE_BTNS.map((el, idx) => {
                 return (
                   <View style={styles.type_btn_active} key={idx}>
-                    <Pressable key={idx}>
+                    <Pressable key={idx} onPress={() => setType(el)}>
                       <Text style={styles.type_btn}>{ el }</Text>
                     </Pressable>
                   </View>
@@ -57,7 +59,8 @@ export const Home = () => {
               }) }
             </View>
             <View style={styles.type_products}>
-              { products?.map((el, idx) => <ImageSection data={el} key={idx} />) }
+              {/* { products?.map((el, idx) => <ImageSection data={el} key={idx} />) } */}
+              { products?.filter((el, idx) => type === "" ? el : type === el.type && el).map((el, idx) => <ImageSection data={el} key={idx} />) }
             </View>
           </View>
         </View>

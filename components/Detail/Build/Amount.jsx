@@ -1,18 +1,20 @@
-import React from 'react';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { useDetail } from '../../context';
+import React from 'react'
+import { useDetail, useDetailData } from '../../context';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 
-export const Amount = ({ text, booleans, setBooleans, index }) => {
-    const { setOrder, order } = useDetail();
+export const Amount = ({ data, booleans, setBooleans, index }) => {
+    const { setOrder, order, setTotal } = useDetail();
+    const { detailData } = useDetailData();
+    const { img, text, cost } = data;
     const Click = () => { 
         setBooleans(old => old.map((el, idx) => index === idx ? !el : el = false))
+        setTotal(+detailData.price + +cost);
         setOrder({ ...order, size: text })
     }
     return (
         <Pressable onPress={() => { Click() }} style={styles.container} >
             <View style={!booleans[index] ? { padding: 10 } : styles.active}>
-                <FontAwesome5 name="coffee" size={24} color="black" />
+                <Image source={{ uri: img }} style={styles.size_cup} />
             </View>
             <Text style={{ ...styles.text, color: booleans[index] ? "black" : 'silver' }}>{text}</Text>
         </Pressable>
@@ -40,5 +42,9 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderColor: '#F39C12',
         backgroundColor: '#FAD7A0',
+    },
+    size_cup: {
+        width: 48,
+        height: 48
     }
 })
