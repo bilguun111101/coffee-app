@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import { useAuth, useUserData } from '../context';
-import { Cart } from './Build';
+import React, { useState, useEffect, lazy } from 'react';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, Pressable } from "react-native";
+import { Cart } from './Build/Cart';
 import { Empty } from "../Empty";
+import { useNavigation } from '@react-navigation/native';
 
 export const MyBag = () => {
   const { user } = useAuth();
-  const { myBag } = useUserData();
-  // const total = myBag?.reduce((accumilator, currenValue) => accumilator + currenValue.price);
+  const navigation = useNavigation();
+  const { myBag, deleteMyBag, setDocumentMyBag } = useUserData();
+  
+  const AddOrder = async() => {
+    myBag.forEach((doc) => {
+      setDocumentMyBag("order", doc);
+      deleteMyBag("myBag", doc.id);
+      navigation.navigate("Bottom_tab_container");
+    })
+  }
   return (
     <SafeAreaView style={styles.container}>
       {
@@ -23,7 +32,6 @@ export const MyBag = () => {
               <View style={styles.bottom_document}>
                 <View style={styles.subtotal}>
                   <Text style={{ color: 'gray' }}>Subtotal</Text>
-                  {/* <Text style={{ color: 'gray' }}>{ `${total + 10}$` }</Text> */}
                 </View>
                 <View style={styles.subtotal}>
                   <Text style={{ color: 'gray' }}>Tax & Fees</Text>
@@ -31,7 +39,20 @@ export const MyBag = () => {
                 </View>
                 <View style={styles.subtotal}>
                   <Text style={{ fontSize: 18, fontWeight: '500' }}>Total</Text>
-                  {/* <Text style={{ fontSize: 16, fontWeight: '500' }}>{total}</Text> */}
+                  <Text style={{ fontSize: 16, fontWeight: '500' }}>{
+                    (() => {
+                      let total = 0;
+                      myBag?.forEach(element => {
+                        total += element.total;
+                      });
+                      return `${total + 10}$`;
+                    })()
+                  }</Text>
+                </View>
+                <View style={styles.addOrder}>
+                  <Pressable onPress={() => {AddOrder()}} style={styles.addOrder_btn}>
+                    <Text style={{ textAlign: 'center', color: '#FFF' }}>Add Order</Text>
+                  </Pressable>
                 </View>
               </View>
             </>)
@@ -74,5 +95,16 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       borderBottomWidth: 0.8,
       borderBottomColor: 'silver'
+    },
+    addOrder: {
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    addOrder_btn: {
+      width: '80%',
+      padding: 10,
+      backgroundColor: 'orange',
+      borderRadius: 10,
     }
 })

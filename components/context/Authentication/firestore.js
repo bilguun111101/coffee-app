@@ -11,7 +11,8 @@ export const UserDataProvider = ({ children }) => {
     const [current_user_data, setCurrent_user_data] = useState(false);
     const { userUid } = useAuth();
 
-    const myBag = useGet_data_second_collection("myBag", userUid) || [];
+    const myBag = useGet_data_second_collection("myBag", userUid);
+    const order = useGet_data_second_collection("order", userUid);
 
     const setDocumentMyBag = async(path, myBag) => {
         await firestore().collection('admin').doc(userUid).collection(path).add(myBag);
@@ -19,6 +20,10 @@ export const UserDataProvider = ({ children }) => {
     
     const getUserData = async(path, doc) => {
         return await firestore().collection(path).doc(doc).get();
+    }
+
+    const deleteMyBag = async(path, id) => {
+        firestore().collection('admin').doc(userUid).collection(path).doc(id).delete().then(() => console.log("bag product delete is successful!!!"));
     }
 
     useEffect(() => {
@@ -33,6 +38,8 @@ export const UserDataProvider = ({ children }) => {
                 current_user_data,
                 setDocumentMyBag,
                 myBag,
+                deleteMyBag,
+                order
             }}
         >
             { children }

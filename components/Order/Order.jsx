@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from './Build';
 import { Empty } from '../Empty';
-import { useAuth } from '../context';
+import { useAuth, useUserData } from '../context';
 import btns from "./type-button.json";
 import DropShadow from "react-native-drop-shadow";
 import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
 
+let number = 0;
+
 export const Order = () => {
   const { user } = useAuth();
+  const { order } = useUserData();
+  const [process, setProcess] = useState("Processing");
   return (
     <View style={styles.container_content}>
       {
@@ -22,14 +26,21 @@ export const Order = () => {
                   { btns.map((el, idx) => {
                     return(
                       <View style={styles.btn_content} key={idx}>
-                        <Pressable><Text style={{ fontSize: 17 }}>{ el }</Text></Pressable>
+                        <Pressable onPress={() => setProcess(el)}>
+                          <Text style={{ fontSize: 17 }}>{ el }</Text>
+                        </Pressable>
                       </View>
                     )
                   }) }
                 </View>
               </DropShadow>
               <ScrollView style={styles.content}>
-                <Card />
+                {
+                  order?.map((el, idx) => {
+                    number++;
+                    if(process === el.process) return <Card key={idx} element={el} number={number} />
+                  })
+                }
               </ScrollView>
             </View>
           </>

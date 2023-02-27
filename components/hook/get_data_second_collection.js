@@ -12,6 +12,6 @@ export const useGet_data_second_collection = (secondPath, uuid) => {
                 })
             } catch (error) { console.log(error) }
         })()
-    }, [])
+    }, [uuid])
     return data;
 }
