@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { FlatList, Text, View, StyleSheet, Image, Pressable } from 'react-native';
-import { useDetailData } from '../../../context';
+import { FlatList, Text, View, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { useAuth, useDetailData } from '../../../context';
 
 export const Favourite = ({ data }) => {
   return (
@@ -10,6 +10,7 @@ export const Favourite = ({ data }) => {
 }
 
 export const ImageSection = ({ data }) => {
+    const { user } = useAuth();
     const navigation = useNavigation();
     const { image, price, name } = data;
     const { setDetailData } = useDetailData();
@@ -18,7 +19,7 @@ export const ImageSection = ({ data }) => {
         navigation.navigate("Detail")
     }
     return (
-        <Pressable style={styles.image_section} onPress={ () => click_product() }>
+        <Pressable style={styles.image_section} onPress={ () => user ? click_product() : alert("You have to Log in") }>
             <Image source={{ uri: image }} style={styles.image} />
             <View style={{ marginTop: 10, flexDirection: 'column' }}>
                 <Text style={styles.name}>{ name }</Text>

@@ -7,7 +7,7 @@ import { useGet_data_second_collection } from "../../hook/get_data_second_collec
 const UserDataContext = createContext();
 
 export const UserDataProvider = ({ children }) => {
-    const products = useGet_data_from_firestore("products") || false;
+    const products = useGet_data_from_firestore("products");
     const [current_user_data, setCurrent_user_data] = useState(false);
     const { userUid } = useAuth();
 

@@ -8,12 +8,11 @@ import { LogInWithPhone } from "../components/LogInWithPhone/LogInWithPhone";
 const Stack = createStackNavigator();
 
 export const MyStack = () => {
-    const { userActive, otpScreen, productsDataCame, setProductsDataCame } = useUserActive();
     const { products } = useUserData();
     return (
         <Stack.Navigator>
             {
-                products ? (
+                !products.loading ? (
                     <>
                         <Stack.Screen name="Bottom_tab_container" component={BottomTabContainer} options={{ headerShown: false }} />
                         <Stack.Screen name="Otp" component={Otp} options={{ headerShown: false }} />

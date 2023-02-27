@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import styles from './Home-style';
 import TYPE_BTNS from "./type-btns.json";
 import { useAuth, useUserData } from '../context';
 import { Favourite, ImageSection } from './Build';
+import { useNavigation } from '@react-navigation/native';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, SafeAreaView, Image, ScrollView, Pressable, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
 
 export const Home = () => {
+  const { user } = useAuth();
   const navigation = useNavigation();
-  const { products, myBag } = useUserData();
   const [type, setType] = useState("");
+  const { products, myBag } = useUserData();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header_section}>
@@ -18,7 +19,7 @@ export const Home = () => {
           <Image source={require("../../assets/logo.png")} style={{ width: 170, height: 25 }} />
           <TouchableOpacity style={styles.bag_icon} onPress={() => navigation.navigate("MyBag")}>
             {
-              myBag ?
+              user ?
                   <>
                     <View style={styles.amount_bag}>
                       <Text style={{ color: '#FFF' }}>{ myBag.length }</Text>
@@ -47,11 +48,11 @@ export const Home = () => {
           </View>
           <View style={styles.favourite_section}>
             <Text style={{ fontSize: 16 }}>Your favourite</Text>
-            <Favourite data={products} />
+            <Favourite data={products.data} />
           </View>
           <View style={styles.favourite_section}>
             <Text style={{ fontSize: 16 }}>Seasonal drinks</Text>
-            <Favourite data={products} />
+            <Favourite data={products.data} />
           </View>
           <View style={styles.choose_type_section}>
             <View style={styles.type_btns}>
@@ -66,7 +67,7 @@ export const Home = () => {
               }) }
             </View>
             <View style={styles.type_products}>
-              { products?.filter((el, idx) => type === "" ? el : type === el.type && el).map((el, idx) => <ImageSection data={el} key={idx} />) }
+              { products.data?.filter((el, idx) => type === "" ? el : type === el.type && el).map((el, idx) => <ImageSection data={el} key={idx} />) }
             </View>
           </View>
         </View>
