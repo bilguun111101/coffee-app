@@ -1,7 +1,7 @@
 import { BottomTabContainer } from "./Bottom";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MyBag, DetailSection, Start } from "../../coffee-app/components";
-import { useUserActive, useUserData } from "../components/context";
+import { useUserData } from "../components/context";
 import { Otp } from "../components/OTP/Otp";
 import { LogInWithPhone } from "../components/LogInWithPhone/LogInWithPhone";
 

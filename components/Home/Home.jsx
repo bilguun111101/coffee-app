@@ -7,9 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign, SimpleLineIcons } from '@expo/vector-icons';
 import { View, Text, SafeAreaView, Image, ScrollView, Pressable, TouchableOpacity } from "react-native";
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
   const { user } = useAuth();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [type, setType] = useState("");
   const { products, myBag } = useUserData();
   return (
@@ -47,11 +47,11 @@ export const Home = () => {
             <Image source={{ uri: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Latte_and_dark_coffee.jpg" }} style={styles.introduction} />
           </View>
           <View style={styles.favourite_section}>
-            <Text style={{ fontSize: 16 }}>Your favourite</Text>
+            <Text style={{ fontSize: 16, fontWeight: '500' }}>Your favourite</Text>
             <Favourite data={products.data} />
           </View>
           <View style={styles.favourite_section}>
-            <Text style={{ fontSize: 16 }}>Seasonal drinks</Text>
+            <Text style={{ fontSize: 16, fontWeight: '500' }}>Seasonal drinks</Text>
             <Favourite data={products.data} />
           </View>
           <View style={styles.choose_type_section}>

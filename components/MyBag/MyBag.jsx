@@ -32,6 +32,15 @@ export const MyBag = () => {
               <View style={styles.bottom_document}>
                 <View style={styles.subtotal}>
                   <Text style={{ color: 'gray' }}>Subtotal</Text>
+                  <Text style={{ color: 'gray' }}>{
+                    (() => {
+                      let total = 0;
+                      myBag?.forEach(element => {
+                        total += element.total;
+                      });
+                      return `$${total}`;
+                    })()
+                  }</Text>
                 </View>
                 <View style={styles.subtotal}>
                   <Text style={{ color: 'gray' }}>Tax & Fees</Text>
@@ -45,7 +54,7 @@ export const MyBag = () => {
                       myBag?.forEach(element => {
                         total += element.total;
                       });
-                      return `${total + 10}$`;
+                      return `$${total + 10}`;
                     })()
                   }</Text>
                 </View>

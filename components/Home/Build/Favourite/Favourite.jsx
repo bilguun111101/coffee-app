@@ -5,7 +5,13 @@ import { useAuth, useDetailData } from '../../../context';
 
 export const Favourite = ({ data }) => {
   return (
-    <FlatList horizontal data={data} renderItem={({ item }) => <ImageSection data={item} />} keyExtractor={item => item.image} />
+    <FlatList 
+        horizontal 
+        data={data} 
+        renderItem={({ item }) => <ImageSection data={item} />} 
+        keyExtractor={item => item.image} 
+        showsHorizontalScrollIndicator={false} 
+    />
   )
 }
 
@@ -16,7 +22,7 @@ export const ImageSection = ({ data }) => {
     const { setDetailData } = useDetailData();
     const click_product = () => {
         setDetailData(data);
-        navigation.navigate("Detail")
+        navigation.navigate("Detail", { data });
     }
     return (
         <Pressable style={styles.image_section} onPress={ () => user ? click_product() : alert("You have to Log in") }>
@@ -44,10 +50,11 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 180,
-        borderRadius: 5,
+        borderRadius: 23,
     },
     name: {
         fontSize: 16,
+        fontWeight: '500'
     },
     price: {
         fontSize: 12,

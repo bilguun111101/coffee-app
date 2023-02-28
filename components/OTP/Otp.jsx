@@ -13,24 +13,20 @@ export const Otp = () => {
         try {
             const isConfirmed = await confirmCode();
             if (!isConfirmed?.additionalUserInfo?.isNewUser) {
-                console.log(
-                    "is new",
-                    isConfirmed?.additionalUserInfo?.phoneNumber
-                    );
-                    await firestore()
-                    .collection("users")
-                    .doc(isConfirmed?.user?.uid)
-                    .set({
-                        phoneNumber: isConfirmed?.user?.phoneNumber,
-                        myBag: [],
-                        orders: [],
-                    });
-                }
-                navigation.navigate("Bottom_tab_container");
-                return;
-            } catch (error) {
-                console.log(error);
+                await firestore()
+                .collection("users")
+                .doc(isConfirmed?.user?.uid)
+                .set({
+                    phoneNumber: isConfirmed?.user?.phoneNumber,
+                    myBag: [],
+                    orders: [],
+                });
             }
+            navigation.navigate("Bottom_tab_container");
+            return;
+        } catch (error) {
+            console.log(error);
+        }
     }
   return (
     <SafeAreaView style={styles.container}>

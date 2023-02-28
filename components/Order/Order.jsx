@@ -4,7 +4,8 @@ import { Empty } from '../Empty';
 import { useAuth, useUserData } from '../context';
 import btns from "./type-button.json";
 import DropShadow from "react-native-drop-shadow";
-import { View, StyleSheet, Text, Pressable, ScrollView } from "react-native";
+import { View, StyleSheet, Text, Pressable, ScrollView, SafeAreaView } from "react-native";
+import { TabViewSection } from '../TabView';
 
 let number = 0;
 
@@ -13,8 +14,8 @@ export const Order = () => {
   const { order } = useUserData();
   const [process, setProcess] = useState("Processing");
   return (
-    <View style={styles.container_content}>
-      {
+    <SafeAreaView style={styles.container_content}>
+      {/* {
         user ? (
           <>
             <View style={styles.container}>
@@ -39,6 +40,7 @@ export const Order = () => {
                   order?.map((el, idx) => {
                     number++;
                     if(process === el.process) return <Card key={idx} element={el} number={number} />
+                    if(idx === (order.length - 1)) number = 0;
                   })
                 }
               </ScrollView>
@@ -47,8 +49,9 @@ export const Order = () => {
         ) : (
           <Empty empty_or_not={user ? true : false} />
         )
-      }
-    </View>
+      } */}
+      <TabViewSection />
+    </SafeAreaView>
   )
 }
 

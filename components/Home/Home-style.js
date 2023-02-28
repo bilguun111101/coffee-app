@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     introduction: {
       flex: 1,
-      borderRadius: 10,
+      borderRadius: 30,
     },
     favourite_section: {
       width: '100%',
