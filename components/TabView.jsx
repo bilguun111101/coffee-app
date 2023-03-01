@@ -65,11 +65,7 @@ export function TabViewSection() {
         )
     }
 
-    const renderScene = SceneMap({
-        Processing,
-        Success,
-        Cancelled,
-    });
+    const renderScene = SceneMap({ Processing, Success, Cancelled });
 
   return (
     <TabView
@@ -81,8 +77,8 @@ export function TabViewSection() {
         return (
             <TabBar
                 { ...props }
-                indicatorStyle={{ backgroundColor: 'orange' }}
-                tabStyle={{ backgroundColor: '#FFF' }}
+                indicatorStyle={{height: 3, backgroundColor: 'orange'}}
+                style={{ backgroundColor: '#FFF' }}
                 renderLabel={({ route, focused, color }) => (
                     <Text style={{ color: '#000' }}>
                         { route.title }
@@ -94,6 +90,7 @@ export function TabViewSection() {
     />
   );
 }
+
 
 const styles = StyleSheet.create({
     container: {
