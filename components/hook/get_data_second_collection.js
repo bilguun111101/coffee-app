@@ -7,12 +7,12 @@ export const useGet_data_second_collection = (secondPath, uuid) => {
     useEffect(() => {
         (async() => {
             try {
-                await firestore().collection('admin').doc(uuid).collection(secondPath).onSnapshot(docs => {
-                    let save = [];
-                    docs.forEach(doc => {
-                        save.push({ id: doc.id, ...doc.data() });
-                    })
-                    setData(save);
+                firestore().collection('admin').doc(uuid).collection(secondPath).onSnapshot(docs => {
+                    // let save = [];
+                    // docs.forEach(doc => {
+                        // save.push({ id: doc.id, ...doc.data() });
+                    // })
+                    setData(docs.docs.map((el, idx) => ({ id: el.id, ...el.data() })));
                 })
             } catch (error) { console.log(error) }
         })()

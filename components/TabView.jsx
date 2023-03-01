@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { Card } from './Order/Build';
+import { useAuth } from './context';
+import { Text, StyleSheet } from 'react-native';
 import { View, useWindowDimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { Text, StyleSheet } from 'react-native';
-import { Card } from './Order/Build';
-import { useUserData } from './context';
+import { useGet_data_second_collection } from './hook/get_data_second_collection';
 
 export function TabViewSection() {
   const layout = useWindowDimensions();
@@ -14,30 +15,52 @@ export function TabViewSection() {
     { key: 'Success', title: 'Success' },
     { key: 'Cancelled', title: 'Cancelled' }
   ]);
-
-  const { orders } = useUserData();
+  const { userUid } = useAuth();
+  const orders = useGet_data_second_collection("order", userUid);
 
     const Processing = (props) => {
         let number = 0;
+        const data = orders?.filter((el, idx) => el.process === "Processing");
         return (
             <View style={styles.container}>
-                { orders?.map((el, idx) => <Card key={idx} element={el} number={number} />) }
+                { data?.map((el, idx) => {
+                    number++;
+                    return (
+                        <>
+                            <Card key={idx} element={el} number={number} />
+                        </>
+                    )
+                }) }
             </View>
         )
     }
 
     const Success = (props) => {
+        let number = 0;
+        const data = orders?.filter((el, idx) => el.process === "Success");
         return (
             <View style={styles.container}>
-                { orders?.map((el, idx) => <Card key={idx} />) }
+                { data?.map((el, idx) => {
+                    number++;
+                    return (
+                        <Card key={idx} element={el} number={number} />
+                    )
+                }) }
             </View>
         )
     }
 
     const Cancelled = (props) => {
+        let number = 0;
+        const data = orders?.filter((el, idx) => el.process === "Cancelled");
         return (
             <View style={styles.container}>
-                { orders?.map((el, idx) => <Card key={idx} />) }
+                { data?.map((el, idx) => {
+                    number++;
+                    return (
+                        <Card key={idx} element={el} number={number} />
+                    );
+                })}
             </View>
         )
     }
@@ -58,8 +81,8 @@ export function TabViewSection() {
         return (
             <TabBar
                 { ...props }
-                indicatorStyle={{ backgroundColor: '#000' }}
-                tabStyle={{ backgroundColor: 'white' }}
+                indicatorStyle={{ backgroundColor: 'orange' }}
+                tabStyle={{ backgroundColor: '#FFF' }}
                 renderLabel={({ route, focused, color }) => (
                     <Text style={{ color: '#000' }}>
                         { route.title }

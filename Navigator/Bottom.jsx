@@ -22,10 +22,9 @@ export const BottomTabContainer = () => {
                 }} 
             />
             <Tab.Screen 
-                name="Order" 
+                name="My Order" 
                 component={Order} 
                 options={{
-                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="shopping-cart" size={size} color={color} />
                     )
